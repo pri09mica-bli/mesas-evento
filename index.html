@@ -1,48 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>XV Zamira</title>
 
 <style>
+
 body{
 font-family: Arial;
 text-align:center;
 background: radial-gradient(circle,#0f0f0f,#000000);
 color:white;
-margin-top:120px;
+margin-top:100px;
 overflow:hidden;
+padding:20px;
 }
 
 h1{
 color:#00ff9c;
-font-size:70px;
+font-size:12vw;
 font-style:italic;
-letter-spacing:3px;
+letter-spacing:2px;
 }
 
 h2{
-font-size:28px;
-margin-bottom:25px;
+font-size:6vw;
+margin-bottom:30px;
 }
 
 input{
-padding:15px;
-font-size:20px;
+padding:18px;
+font-size:22px;
 border-radius:12px;
 border:none;
-width:260px;
+width:80%;
+max-width:350px;
 text-align:center;
 }
 
 button{
-padding:15px 35px;
-font-size:20px;
+padding:18px 40px;
+font-size:22px;
 border-radius:12px;
 border:none;
 background:#00ff9c;
 color:black;
-margin-top:15px;
+margin-top:20px;
 cursor:pointer;
 }
 
@@ -51,18 +56,18 @@ background:#00cc7a;
 }
 
 #resultado{
-margin-top:35px;
-font-size:30px;
+margin-top:40px;
+font-size:7vw;
 color:#00ff9c;
 }
 
 .disco{
 position:absolute;
-top:30px;
+top:20px;
 left:50%;
 transform:translateX(-50%);
-width:80px;
-height:80px;
+width:90px;
+height:90px;
 border-radius:50%;
 background: radial-gradient(circle,#ffffff,#9be8ff,#cccccc);
 animation:girar 6s linear infinite;
@@ -73,7 +78,9 @@ box-shadow:0 0 25px #00ff9c;
 from{transform:translateX(-50%) rotate(0deg);}
 to{transform:translateX(-50%) rotate(360deg);}
 }
+
 </style>
+
 </head>
 
 <body>
@@ -85,7 +92,9 @@ to{transform:translateX(-50%) rotate(360deg);}
 <h2>🪩 Buscá tu mesa 🪩</h2>
 
 <input id="nombre" placeholder="Escribí tu nombre o apellido">
+
 <br>
+
 <button onclick="buscarMesa()">Buscar</button>
 
 <div id="resultado"></div>
@@ -93,34 +102,38 @@ to{transform:translateX(-50%) rotate(360deg);}
 <script>
 
 let invitados = {
+
 "Priscila Beltran":5,
 "Juan Perez":3,
 "Maria Lopez":8
-};
+
+}
 
 function buscarMesa(){
 
-let texto = document.getElementById("nombre").value.toLowerCase().trim();
+let texto = document.getElementById("nombre").value.toLowerCase().trim()
 
-let encontrado = false;
+let encontrado = false
 
 for (let nombre in invitados){
 
 if(nombre.toLowerCase().includes(texto)){
 
 document.getElementById("resultado").innerHTML =
-"Hola <b>"+nombre+"</b><br>Tu mesa es la <b>"+invitados[nombre]+"</b> 🪩";
+"Hola <b>"+nombre+"</b><br>Tu mesa es la <b>"+invitados[nombre]+"</b> 🪩"
 
-encontrado = true;
-break;
+encontrado = true
+break
 
 }
 
 }
 
 if(!encontrado){
+
 document.getElementById("resultado").innerHTML =
-"No encontramos tu nombre";
+"No encontramos tu nombre"
+
 }
 
 }
