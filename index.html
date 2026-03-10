@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Buscá tu mesa</title>
+<style>
+body{
+font-family: Arial;
+text-align:center;
+margin-top:100px;
+}
+input{
+padding:10px;
+font-size:18px;
+}
+button{
+padding:10px 20px;
+font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Buscá tu mesa</h1>
+
+<input id="nombre" placeholder="Escribí tu nombre">
+<button onclick="buscarMesa()">Buscar</button>
+
+<h2 id="resultado"></h2>
+
+<script>
+
+let invitados = {
+"Priscila Beltran":5,
+"Juan Perez":3,
+"Maria Lopez":8,
+"Carlos Gomez":2
+}
+
+function buscarMesa(){
+let nombre = document.getElementById("nombre").value
+
+if(invitados[nombre]){
+document.getElementById("resultado").innerHTML =
+"Tu mesa es la número " + invitados[nombre]
+}else{
+document.getElementById("resultado").innerHTML =
+"No encontramos tu nombre"
+}
+}
+
+</script>
+
+</body>
+</html>
