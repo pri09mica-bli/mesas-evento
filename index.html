@@ -80,13 +80,29 @@ let invitados = {
 
 function buscarMesa(){
 
-let nombre = document.getElementById("nombre").value
+let texto = document.getElementById("nombre").value.trim().toLowerCase()
 
-if(invitados[nombre]){
+let encontrado = false
+
+for (let nombre in invitados){
+
+if(nombre.toLowerCase().includes(texto)){
 
 document.getElementById("resultado").innerHTML =
-"Hola "+nombre+"<br>Tu mesa es la "+invitados[nombre]+" 🪩"
+"Hola <b>"+nombre+"</b><br>Tu mesa es la <b>"+invitados[nombre]+"</b> 🪩"
 
-}else{
+encontrado = true
+break
 
-document.getElement
+}
+
+}
+
+if(!encontrado){
+
+document.getElementById("resultado").innerHTML =
+"No encontramos tu nombre"
+
+}
+
+}
