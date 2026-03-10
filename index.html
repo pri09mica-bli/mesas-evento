@@ -1,52 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Buscá tu mesa</title>
+<title>XV Zamira - Buscá tu mesa</title>
+
 <style>
+
 body{
 font-family: Arial;
 text-align:center;
-margin-top:100px;
+background: radial-gradient(circle, #1a1a1a, #000000);
+color:white;
+margin-top:120px;
 }
+
+h1{
+color:#00ff9c;
+font-size:65px;
+font-style:italic;
+letter-spacing:4px;
+}
+
+h2{
+color:white;
+font-size:28px;
+}
+
 input{
-padding:10px;
-font-size:18px;
+padding:15px;
+font-size:20px;
+border-radius:10px;
+border:none;
+width:260px;
+text-align:center;
 }
+
 button{
-padding:10px 20px;
-font-size:18px;
+padding:15px 30px;
+font-size:20px;
+border-radius:10px;
+border:none;
+background:#00ff9c;
+color:black;
+cursor:pointer;
+margin-top:15px;
 }
+
+#resultado{
+margin-top:35px;
+font-size:30px;
+color:#00ff9c;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>Buscá tu mesa</h1>
+<h1>XV Zamira</h1>
+
+<h2>🪩 Buscá tu mesa 🪩</h2>
 
 <input id="nombre" placeholder="Escribí tu nombre">
+
+<br>
+
 <button onclick="buscarMesa()">Buscar</button>
 
-<h2 id="resultado"></h2>
+<div id="resultado"></div>
 
 <script>
 
 let invitados = {
+
 "Priscila Beltran":5,
 "Juan Perez":3,
-"Maria Lopez":8,
-"Carlos Gomez":2
+"Maria Lopez":8
+
 }
 
 function buscarMesa(){
+
 let nombre = document.getElementById("nombre").value
 
 if(invitados[nombre]){
+
 document.getElementById("resultado").innerHTML =
-"Tu mesa es la número " + invitados[nombre]
+"Hola <b>"+nombre+"</b><br>Tu mesa es la <b>"+invitados[nombre]+"</b> 🪩"
+
 }else{
+
 document.getElementById("resultado").innerHTML =
 "No encontramos tu nombre"
+
 }
+
 }
 
 </script>
