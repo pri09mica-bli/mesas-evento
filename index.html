@@ -4,7 +4,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>XV Zamira</title>
+<title>Mis XV Zami</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
@@ -12,16 +12,17 @@
 
 body{
 margin:0;
-background:#f5f5f5;
+background:#f4f4f4;
 font-family:'Poppins',sans-serif;
 text-align:center;
+overflow-x:hidden;
 }
 
 /* TITULO */
 
 .titulo{
 font-family:'Great Vibes',cursive;
-font-size:60px;
+font-size:55px;
 color:#556b2f;
 margin-top:40px;
 }
@@ -32,10 +33,10 @@ margin-top:40px;
 background:white;
 width:85%;
 max-width:420px;
-margin:30px auto;
+margin:25px auto;
 padding:25px;
 border-radius:20px;
-box-shadow:0 8px 20px rgba(0,0,0,0.1);
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
 }
 
 input{
@@ -60,23 +61,27 @@ cursor:pointer;
 
 #resultado{
 margin-top:15px;
-color:#556b2f;
 font-size:20px;
+color:#556b2f;
 }
 
 /* PLANO */
 
 .plano{
-margin-top:50px;
+margin-top:40px;
+width:100%;
+max-width:420px;
+margin-left:auto;
+margin-right:auto;
+
 display:grid;
-grid-template-columns:1fr 1fr 1fr;
-grid-template-rows:auto auto auto;
+grid-template-columns:1fr 1fr;
+grid-row-gap:25px;
 justify-items:center;
 align-items:center;
-gap:40px;
 }
 
-/* MESA */
+/* MESAS */
 
 .mesa{
 width:90px;
@@ -87,7 +92,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-family:'Great Vibes',cursive;
-font-size:26px;
+font-size:22px;
 cursor:pointer;
 transition:0.3s;
 }
@@ -96,19 +101,29 @@ transition:0.3s;
 transform:scale(1.1);
 }
 
-/* MESA ACTIVA */
+/* MESA ILUMINADA */
 
 .activa{
 background:#556b2f;
 color:white;
-box-shadow:0 0 20px #556b2f;
+box-shadow:
+0 0 15px #556b2f,
+0 0 30px #556b2f,
+0 0 60px #556b2f;
+
+animation:brillo 1s infinite alternate;
+}
+
+@keyframes brillo{
+from{transform:scale(1)}
+to{transform:scale(1.1)}
 }
 
 /* MESA PRINCIPAL */
 
 .principal{
-grid-column:2;
-width:180px;
+grid-column:span 2;
+width:200px;
 height:50px;
 border-radius:25px;
 background:#556b2f;
@@ -117,15 +132,15 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-family:'Great Vibes',cursive;
-font-size:22px;
+font-size:24px;
 }
 
 /* PISTA */
 
 .pista{
-grid-column:2;
-width:200px;
-height:200px;
+grid-column:span 2;
+width:180px;
+height:180px;
 background:#6b705c;
 border-radius:20px;
 display:flex;
@@ -133,12 +148,11 @@ align-items:center;
 justify-content:center;
 color:white;
 font-family:'Great Vibes',cursive;
-font-size:28px;
+font-size:26px;
 text-align:center;
-padding:10px;
 }
 
-/* MODAL NOMBRES */
+/* MODAL */
 
 .modal{
 position:fixed;
@@ -157,6 +171,22 @@ background:white;
 padding:30px;
 border-radius:20px;
 max-width:300px;
+}
+
+/* CONFETTI */
+
+.confetti{
+position:fixed;
+width:8px;
+height:8px;
+top:-10px;
+animation:caer 3s linear forwards;
+}
+
+@keyframes caer{
+to{
+transform:translateY(100vh) rotate(360deg);
+}
 }
 
 </style>
@@ -179,31 +209,22 @@ max-width:300px;
 
 </div>
 
-<!-- PLANO -->
-
 <div class="plano">
-
-<div class="mesa" id="mesa2" onclick="mostrarMesa(2)">Mesa 2</div>
 
 <div class="principal">Mesa principal</div>
 
+<div class="mesa" id="mesa1" onclick="mostrarMesa(1)">Mesa 1</div>
+<div class="mesa" id="mesa4" onclick="mostrarMesa(4)">Mesa 4</div>
+
+<div class="mesa" id="mesa2" onclick="mostrarMesa(2)">Mesa 2</div>
 <div class="mesa" id="mesa5" onclick="mostrarMesa(5)">Mesa 5</div>
 
 <div class="mesa" id="mesa3" onclick="mostrarMesa(3)">Mesa 3</div>
+<div class="mesa" id="mesa6" onclick="mostrarMesa(6)">Mesa 6</div>
 
 <div class="pista">Pista<br>de<br>Baile</div>
 
-<div class="mesa" id="mesa6" onclick="mostrarMesa(6)">Mesa 6</div>
-
-<div class="mesa" id="mesa4" onclick="mostrarMesa(4)">Mesa 4</div>
-
-<div></div>
-
-<div class="mesa" id="mesa1" onclick="mostrarMesa(1)">Mesa 1</div>
-
 </div>
-
-<!-- MODAL -->
 
 <div class="modal" id="modal">
 
@@ -220,8 +241,6 @@ max-width:300px;
 </div>
 
 <script>
-
-/* LISTA INVITADOS */
 
 let invitados={
 "Priscila Beltran":1,
@@ -243,9 +262,11 @@ if(nombre.toLowerCase().includes(texto)){
 let mesa=invitados[nombre]
 
 document.getElementById("resultado").innerHTML=
-"Hola! Tu mesa es la "+mesa
+"Hola! Tu mesa es la Nº "+mesa
 
 iluminarMesa(mesa)
+
+confetti()
 
 return
 
@@ -276,9 +297,7 @@ let lista="<h3>Mesa "+num+"</h3>"
 for(let nombre in invitados){
 
 if(invitados[nombre]==num){
-
 lista+=nombre+"<br>"
-
 }
 
 }
@@ -294,6 +313,30 @@ document.getElementById("modal").style.display="flex"
 function cerrarModal(){
 
 document.getElementById("modal").style.display="none"
+
+}
+
+/* CONFETTI */
+
+function confetti(){
+
+for(let i=0;i<40;i++){
+
+let c=document.createElement("div")
+
+c.className="confetti"
+
+c.style.left=Math.random()*100+"vw"
+
+c.style.background=["#556b2f","#8f9779","#a3b18a"][Math.floor(Math.random()*3)]
+
+c.style.animationDuration=(Math.random()*2+2)+"s"
+
+document.body.appendChild(c)
+
+setTimeout(()=>c.remove(),3000)
+
+}
 
 }
 
