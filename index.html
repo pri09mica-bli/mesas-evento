@@ -12,8 +12,8 @@
 
 body{
 margin:0;
+background:#f5f5f5;
 font-family:'Poppins',sans-serif;
-background:#f4f4f4;
 text-align:center;
 }
 
@@ -21,78 +21,73 @@ text-align:center;
 
 .titulo{
 font-family:'Great Vibes',cursive;
-font-size:65px;
-margin-top:40px;
+font-size:60px;
 color:#556b2f;
+margin-top:40px;
 }
 
-/* TARJETA */
+/* BUSCADOR */
 
 .buscador{
 background:white;
 width:85%;
 max-width:420px;
-margin:40px auto;
-padding:30px;
-border-radius:25px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
-}
-
-.buscador h2{
-font-family:'Great Vibes',cursive;
-font-size:35px;
+margin:30px auto;
+padding:25px;
+border-radius:20px;
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
 }
 
 input{
 width:80%;
-padding:15px;
+padding:14px;
 font-size:18px;
 border:none;
 border-bottom:2px solid #ccc;
-outline:none;
 text-align:center;
 }
 
 button{
-margin-top:20px;
-padding:15px 35px;
+margin-top:15px;
+padding:12px 30px;
 border:none;
-border-radius:30px;
-background:#6b705c;
+border-radius:25px;
+background:#556b2f;
 color:white;
-font-size:18px;
+font-size:16px;
 cursor:pointer;
 }
 
-/* RESULTADO */
-
 #resultado{
-margin-top:20px;
-font-size:22px;
+margin-top:15px;
 color:#556b2f;
+font-size:20px;
 }
 
 /* PLANO */
 
 .plano{
 margin-top:50px;
-display:flex;
-justify-content:center;
-gap:25px;
-flex-wrap:wrap;
-padding-bottom:60px;
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+grid-template-rows:auto auto auto;
+justify-items:center;
+align-items:center;
+gap:40px;
 }
+
+/* MESA */
 
 .mesa{
 width:90px;
 height:90px;
 border-radius:50%;
-background:#a5a58d;
+background:#b7bfa3;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:26px;
 font-family:'Great Vibes',cursive;
+font-size:26px;
 cursor:pointer;
 transition:0.3s;
 }
@@ -101,15 +96,36 @@ transition:0.3s;
 transform:scale(1.1);
 }
 
-.mesa.activa{
+/* MESA ACTIVA */
+
+.activa{
 background:#556b2f;
 color:white;
 box-shadow:0 0 20px #556b2f;
 }
 
-.pista{
+/* MESA PRINCIPAL */
+
+.principal{
+grid-column:2;
 width:180px;
-height:180px;
+height:50px;
+border-radius:25px;
+background:#556b2f;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:'Great Vibes',cursive;
+font-size:22px;
+}
+
+/* PISTA */
+
+.pista{
+grid-column:2;
+width:200px;
+height:200px;
 background:#6b705c;
 border-radius:20px;
 display:flex;
@@ -118,14 +134,29 @@ justify-content:center;
 color:white;
 font-family:'Great Vibes',cursive;
 font-size:28px;
+text-align:center;
 padding:10px;
 }
 
-/* LISTA PERSONAS */
+/* MODAL NOMBRES */
 
-#listaMesa{
-margin-top:30px;
-font-size:18px;
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.modalContenido{
+background:white;
+padding:30px;
+border-radius:20px;
+max-width:300px;
 }
 
 </style>
@@ -137,8 +168,6 @@ font-size:18px;
 <div class="titulo">Mis XV Zami</div>
 
 <div class="buscador">
-
-<h2>Busca tu mesa</h2>
 
 <input id="nombre" placeholder="Tu nombre">
 
@@ -154,23 +183,45 @@ font-size:18px;
 
 <div class="plano">
 
-<div class="mesa" onclick="mostrarMesa(1)" id="mesa1">1</div>
+<div class="mesa" id="mesa2" onclick="mostrarMesa(2)">Mesa 2</div>
 
-<div class="mesa" onclick="mostrarMesa(2)" id="mesa2">2</div>
+<div class="principal">Mesa principal</div>
+
+<div class="mesa" id="mesa5" onclick="mostrarMesa(5)">Mesa 5</div>
+
+<div class="mesa" id="mesa3" onclick="mostrarMesa(3)">Mesa 3</div>
 
 <div class="pista">Pista<br>de<br>Baile</div>
 
-<div class="mesa" onclick="mostrarMesa(3)" id="mesa3">3</div>
+<div class="mesa" id="mesa6" onclick="mostrarMesa(6)">Mesa 6</div>
 
-<div class="mesa" onclick="mostrarMesa(4)" id="mesa4">4</div>
+<div class="mesa" id="mesa4" onclick="mostrarMesa(4)">Mesa 4</div>
+
+<div></div>
+
+<div class="mesa" id="mesa1" onclick="mostrarMesa(1)">Mesa 1</div>
 
 </div>
 
-<div id="listaMesa"></div>
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+<div class="modalContenido">
+
+<div id="lista"></div>
+
+<br>
+
+<button onclick="cerrarModal()">Cerrar</button>
+
+</div>
+
+</div>
 
 <script>
 
-/* INVITADOS */
+/* LISTA INVITADOS */
 
 let invitados={
 "Priscila Beltran":1,
@@ -179,7 +230,7 @@ let invitados={
 "Carlos Gomez":4
 }
 
-/* BUSCAR MESA */
+/* BUSCAR */
 
 function buscarMesa(){
 
@@ -192,7 +243,7 @@ if(nombre.toLowerCase().includes(texto)){
 let mesa=invitados[nombre]
 
 document.getElementById("resultado").innerHTML=
-"Hola! Tu mesa es la n° "+mesa
+"Hola! Tu mesa es la "+mesa
 
 iluminarMesa(mesa)
 
@@ -206,7 +257,7 @@ document.getElementById("resultado").innerHTML="No encontramos tu nombre"
 
 }
 
-/* ILUMINAR MESA */
+/* ILUMINAR */
 
 function iluminarMesa(num){
 
@@ -216,31 +267,33 @@ document.getElementById("mesa"+num).classList.add("activa")
 
 }
 
-/* MOSTRAR PERSONAS DE LA MESA */
+/* MOSTRAR NOMBRES */
 
 function mostrarMesa(num){
 
-let personas=[]
+let lista="<h3>Mesa "+num+"</h3>"
 
 for(let nombre in invitados){
 
 if(invitados[nombre]==num){
 
-personas.push(nombre)
+lista+=nombre+"<br>"
 
 }
 
 }
 
-let html="<h3>Mesa "+num+"</h3>"
+document.getElementById("lista").innerHTML=lista
 
-personas.forEach(p=>{
+document.getElementById("modal").style.display="flex"
 
-html+=p+"<br>"
+}
 
-})
+/* CERRAR */
 
-document.getElementById("listaMesa").innerHTML=html
+function cerrarModal(){
+
+document.getElementById("modal").style.display="none"
 
 }
 
