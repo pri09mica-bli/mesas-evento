@@ -68,15 +68,15 @@ color:#556b2f;
 /* PLANO */
 
 .plano{
-margin-top:40px;
+margin-top:35px;
 width:100%;
-max-width:420px;
+max-width:380px;
 margin-left:auto;
 margin-right:auto;
 
 display:grid;
-grid-template-columns:1fr 1fr;
-grid-row-gap:25px;
+grid-template-columns:1fr 1fr 1fr;
+grid-row-gap:20px;
 justify-items:center;
 align-items:center;
 }
@@ -84,15 +84,15 @@ align-items:center;
 /* MESAS */
 
 .mesa{
-width:90px;
-height:90px;
+width:75px;
+height:75px;
 border-radius:50%;
 background:#b7bfa3;
 display:flex;
 align-items:center;
 justify-content:center;
 font-family:'Great Vibes',cursive;
-font-size:22px;
+font-size:20px;
 cursor:pointer;
 transition:0.3s;
 }
@@ -122,9 +122,9 @@ to{transform:scale(1.1)}
 /* MESA PRINCIPAL */
 
 .principal{
-grid-column:span 2;
+grid-column:span 3;
 width:200px;
-height:50px;
+height:45px;
 border-radius:25px;
 background:#556b2f;
 color:white;
@@ -132,23 +132,22 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-family:'Great Vibes',cursive;
-font-size:24px;
+font-size:22px;
 }
 
 /* PISTA */
 
 .pista{
-grid-column:span 2;
-width:180px;
-height:180px;
+width:120px;
+height:120px;
 background:#6b705c;
-border-radius:20px;
+border-radius:18px;
 display:flex;
 align-items:center;
 justify-content:center;
 color:white;
 font-family:'Great Vibes',cursive;
-font-size:26px;
+font-size:20px;
 text-align:center;
 }
 
@@ -214,15 +213,16 @@ transform:translateY(100vh) rotate(360deg);
 <div class="principal">Mesa principal</div>
 
 <div class="mesa" id="mesa1" onclick="mostrarMesa(1)">Mesa 1</div>
+<div></div>
 <div class="mesa" id="mesa4" onclick="mostrarMesa(4)">Mesa 4</div>
 
 <div class="mesa" id="mesa2" onclick="mostrarMesa(2)">Mesa 2</div>
+<div class="pista">Pista<br>de<br>Baile</div>
 <div class="mesa" id="mesa5" onclick="mostrarMesa(5)">Mesa 5</div>
 
 <div class="mesa" id="mesa3" onclick="mostrarMesa(3)">Mesa 3</div>
+<div></div>
 <div class="mesa" id="mesa6" onclick="mostrarMesa(6)">Mesa 6</div>
-
-<div class="pista">Pista<br>de<br>Baile</div>
 
 </div>
 
@@ -243,10 +243,12 @@ transform:translateY(100vh) rotate(360deg);
 <script>
 
 let invitados={
+
 "Priscila Beltran":1,
 "Juan Perez":2,
 "Maria Lopez":3,
 "Carlos Gomez":4
+
 }
 
 /* BUSCAR */
