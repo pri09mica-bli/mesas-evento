@@ -18,16 +18,12 @@ text-align:center;
 overflow-x:hidden;
 }
 
-/* TITULO */
-
 .titulo{
 font-family:'Great Vibes',cursive;
 font-size:55px;
 color:#556b2f;
 margin-top:40px;
 }
-
-/* BUSCADOR */
 
 .buscador{
 background:white;
@@ -65,8 +61,6 @@ font-size:20px;
 color:#556b2f;
 }
 
-/* PLANO */
-
 .plano{
 margin-top:35px;
 width:100%;
@@ -80,8 +74,6 @@ grid-row-gap:20px;
 justify-items:center;
 align-items:center;
 }
-
-/* MESAS */
 
 .mesa{
 width:75px;
@@ -101,8 +93,6 @@ transition:0.3s;
 transform:scale(1.1);
 }
 
-/* MESA ILUMINADA */
-
 .activa{
 background:#556b2f;
 color:white;
@@ -119,8 +109,6 @@ from{transform:scale(1)}
 to{transform:scale(1.1)}
 }
 
-/* MESA PRINCIPAL */
-
 .principal{
 grid-column:span 3;
 width:200px;
@@ -135,8 +123,6 @@ font-family:'Great Vibes',cursive;
 font-size:22px;
 }
 
-/* PISTA */
-
 .pista{
 width:120px;
 height:120px;
@@ -150,8 +136,6 @@ font-family:'Great Vibes',cursive;
 font-size:20px;
 text-align:center;
 }
-
-/* MODAL */
 
 .modal{
 position:fixed;
@@ -171,8 +155,6 @@ padding:30px;
 border-radius:20px;
 max-width:300px;
 }
-
-/* CONFETTI */
 
 .confetti{
 position:fixed;
@@ -198,7 +180,7 @@ transform:translateY(100vh) rotate(360deg);
 
 <div class="buscador">
 
-<input id="nombre" placeholder="Tu nombre">
+<input id="nombre" placeholder="Escribí tu nombre y apellido">
 
 <br>
 
@@ -244,10 +226,10 @@ transform:translateY(100vh) rotate(360deg);
 
 let invitados = {
 
-"Zamira Paez":"Principal",
-"Malvina Olivera":"Principal",
-"Romina Paez":"Principal",
-"Luis Olivera":"Principal",
+"Zamira Paez":"principal",
+"Malvina Olivera":"principal",
+"Romina Paez":"principal",
+"Luis Olivera":"principal",
 
 "Marta Cocha":1,
 "Ricardo Beltran":1,
@@ -293,24 +275,22 @@ let invitados = {
 
 }
 
-}
-
-/* BUSCAR */
-
 function buscarMesa(){
 
 let texto=document.getElementById("nombre").value.toLowerCase().trim()
 
 for(let nombre in invitados){
 
-if(nombre.toLowerCase().includes(texto)){
+if(nombre.toLowerCase()===texto){
 
 let mesa=invitados[nombre]
 
-document.getElementById("resultado").innerHTML=
-"Hola! Tu mesa es la Nº "+mesa
-
+if(mesa==="principal"){
+document.getElementById("resultado").innerHTML="Hola! Tu lugar es la Mesa Principal"
+}else{
+document.getElementById("resultado").innerHTML="Hola! Tu mesa es la Nº "+mesa
 iluminarMesa(mesa)
+}
 
 confetti()
 
@@ -320,11 +300,62 @@ return
 
 }
 
-document.getElementById("resultado").innerHTML="No encontramos tu nombre"
+sugerirNombre(texto)
 
 }
 
-/* ILUMINAR */
+function sugerirNombre(texto){
+
+let sugerencia=""
+let distanciaMin=999
+
+for(let nombre in invitados){
+
+let distancia=levenshtein(texto,nombre.toLowerCase())
+
+if(distancia<distanciaMin){
+
+distanciaMin=distancia
+sugerencia=nombre
+
+}
+
+}
+
+document.getElementById("resultado").innerHTML=
+"No encontramos tu nombre<br>Quizás quisiste decir:<br><b>"+sugerencia+"</b>"
+
+}
+
+function levenshtein(a,b){
+
+const matrix=[]
+
+for(let i=0;i<=b.length;i++){matrix[i]=[i]}
+
+for(let j=0;j<=a.length;j++){matrix[0][j]=j}
+
+for(let i=1;i<=b.length;i++){
+
+for(let j=1;j<=a.length;j++){
+
+if(b.charAt(i-1)==a.charAt(j-1)){
+matrix[i][j]=matrix[i-1][j-1]
+}else{
+matrix[i][j]=Math.min(
+matrix[i-1][j-1]+1,
+matrix[i][j-1]+1,
+matrix[i-1][j]+1
+)
+}
+
+}
+
+}
+
+return matrix[b.length][a.length]
+
+}
 
 function iluminarMesa(num){
 
@@ -333,8 +364,6 @@ document.querySelectorAll(".mesa").forEach(m=>m.classList.remove("activa"))
 document.getElementById("mesa"+num).classList.add("activa")
 
 }
-
-/* MOSTRAR NOMBRES */
 
 function mostrarMesa(num){
 
@@ -354,15 +383,11 @@ document.getElementById("modal").style.display="flex"
 
 }
 
-/* CERRAR */
-
 function cerrarModal(){
 
 document.getElementById("modal").style.display="none"
 
 }
-
-/* CONFETTI */
 
 function confetti(){
 
